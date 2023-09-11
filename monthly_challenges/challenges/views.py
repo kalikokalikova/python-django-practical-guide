@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from django.http import Http404, HttpResponseNotFound, HttpResponseRedirect
 from django.urls import reverse
 
 challenge_dict = {
@@ -9,19 +9,21 @@ challenge_dict = {
     'april': 'be a flower',
     'may': 'be in love',
     'june': 'wish for summer',
-    'july': 'go outside'
+    'july': 'go outside',
+    'august': None
 }
 
 
 def index(request):
-    response = "<ul>"
-    months = list(challenge_dict.keys())
-    for month in months:
+    month_dicts = {}
+    month_names = list(challenge_dict.keys())
+    for month in month_names:
         month_path = reverse("month-challenge", args=[month])
-        response += f'<li><a href="{month_path}">{month.capitalize()}</a></li>'
-    response += "</ul>"
-    print(response)
-    return (HttpResponse(response))
+        month_dicts[month] = month_path
+    print(month_dicts)
+    return render(request, 'challenges/index.html', {
+        "months": month_names
+    })
 
 
 def monthly_challenge_by_int(request, month):
@@ -36,7 +38,9 @@ def monthly_challenge_by_int(request, month):
 def monthly_challenge(request, month):
     try:
         challenge_text = challenge_dict[month]
-        response_data = f"<h1>{challenge_text}</h1>"
-        return HttpResponse(response_data)
+        return render(request, 'challenges/challenge.html', {
+            "month": month,
+            "goal": challenge_text
+        })
     except:
-        return HttpResponseNotFound("Bro that's not a thing")
+        raise Http404()

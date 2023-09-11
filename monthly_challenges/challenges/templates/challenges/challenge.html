@@ -1,0 +1,8 @@
+{% extends 'base.html' %} {% block page_title%} {{ month|title }} {% endblock %}
+{% block content %} {% include 'challenges/partials/header.html' %}
+<h1>{{ month|title }}'s Challenge</h1>
+{% if goal %}
+<h2>{{ goal }}</h2>
+{% else %}
+<p>There's no goal</p>
+{% endif %} {% endblock %}
