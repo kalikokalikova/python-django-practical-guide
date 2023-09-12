@@ -1,8 +1,20 @@
-{% extends 'base.html' %} {% block page_title%} {{ month|title }} {% endblock %}
-{% block content %} {% include 'challenges/partials/header.html' %}
-<h1>{{ month|title }}'s Challenge</h1>
-{% if goal %}
-<h2>{{ goal }}</h2>
-{% else %}
-<p>There's no goal</p>
-{% endif %} {% endblock %}
+{% extends "base.html" %}
+{% load static %}
+{% block page_title%} {{ month|title }} {% endblock %}
+
+{% block css_files %}
+  <link rel="stylesheet" href="{% static "challenges/challenge.css"%}">
+  <link rel="stylesheet" href="{% static "challenges/partials/header.css"%}">
+{% endblock %}
+
+{% block content %}
+{% include 'challenges/partials/header.html' %}
+
+  <h1>{{ month|title }}'s Challenge</h1>
+  {% if goal %}
+  <h2>{{ goal }}</h2>
+  {% else %}
+  <p class="fallback">There's no goal</p>
+  {% endif %}
+
+{% endblock %}
