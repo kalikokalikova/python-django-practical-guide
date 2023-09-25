@@ -1,15 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>You're the best</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="" />
-  <link rel="icon" href="favicon.png">
-</head>
-<body>
+{% extends "reviews/base.html" %}
 
+{% block title %}Your Review{% endblock %}
 
-  Thank you!
-</body>
-</html>
+{% block content %}
+
+<h2>Thank you!</h2>
+<p>{{ message }}</p>
+
+{% endblock %}
